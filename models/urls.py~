@@ -1,0 +1,10 @@
+from django.conf.urls import include, url
+from . import views
+
+urlpatterns = [
+        url(r'^$', views.post_list),
+        url(r'^usuario/nuevo$', views.nuevo_usuario),
+        url(r'^$', views.ingresar),
+        url(r'^privado/$', views.privado),
+        url(r'^cerrar/$', views.cerrar),
+    ]

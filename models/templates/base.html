@@ -1,0 +1,20 @@
+{% load staticfiles %}
+{% load static %}
+<html>
+<head>
+    {% block head%}
+    <title>Colocaciones</title>
+    {% endblock %}
+</head>
+{% block body %}
+<body class="body">
+    <div class="content container">
+        <div class="row">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+</body>
+{% endblock %}
+</html>

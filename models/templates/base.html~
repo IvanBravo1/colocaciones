@@ -1,0 +1,26 @@
+{% load staticfiles %}
+{% load static %}
+<html>
+<head>
+    {% block head%}
+    <title>NotiCampus</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+     {% endblock %}
+</head>
+{% block body %}
+<body class="body">
+    <div class="content container">
+        <div class="row">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+</body>
+{% endblock %}
+</html>
