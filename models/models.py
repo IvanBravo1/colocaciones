@@ -22,4 +22,14 @@ class Empresa(models.Model):
     def __str__(self):
         return self.nombre
 
+class Ofertas(models.Model):
+    cargo =  models.CharField(max_length=200)
+    trabajo =  models.CharField(max_length=200)
+    horarios =  models.CharField(max_length=200)
+    profesion =  models.CharField(max_length=200)
+    
+    def __str__(self):
+        return self.nombre
+
+
 

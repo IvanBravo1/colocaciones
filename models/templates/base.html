@@ -1,13 +1,11 @@
-{% load staticfiles %}
-{% load static %}
 <html>
 <head>
-    {% block head%}
-    <title>Colocaciones</title>
-    {% endblock %}
+    <title>{% block titulo %}Colocaciones{% endblock %}</title>
 </head>
 {% block body %}
 <body class="body">
+{% block encabezado %}
+{% endblock %}
     <div class="content container">
         <div class="row">
             {% block content %}

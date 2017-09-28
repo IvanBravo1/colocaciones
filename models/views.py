@@ -1,12 +1,13 @@
 from django.shortcuts import render, render_to_response, redirect
+from .models import Empresa
+from .models import Persona
+from .models import Ofertas
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-
-def post_list(request):
-    return render(request, 'post_list.html', {})
+from django.template import RequestContext
 
 def nuevo_usuario(request):
     if request.method=='POST':
@@ -16,7 +17,7 @@ def nuevo_usuario(request):
             return HttpResponseRedirect('/')
     else:
         formulario = UserCreationForm()
-    return render(request, 'nuevousuario.html', {'formulario':formulario})
+    return render(request, 'nuevo_usuario.html', {'formulario':formulario})
 
 def ingresar(request):
     if not request.user.is_anonymous():
@@ -49,5 +50,12 @@ def privado(request):
 def cerrar(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+@login_required(login_url='/ingresar')
+def inicio(request):
+    ofertas = Ofertas.objects.all().order_by('created_date')
+    grupo = Group.objects.get(name="Ofertas").user_set.all()
+    return render(request, 'inicio.html', {'ofertas': ofertas, 'grupo':grupo})
+
 
 
