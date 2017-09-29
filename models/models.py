@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
-class Persona(models.Model):
+class Desocupado(models.Model):
     nombre =  models.CharField(max_length=200)
     apellido = models.CharField(max_length=200)
     dni = models.CharField(max_length=200)

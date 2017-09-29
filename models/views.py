@@ -1,6 +1,6 @@
 from django.shortcuts import render, render_to_response, redirect
 from .models import Empresa
-from .models import Persona
+from .models import Desocupado
 from .models import Ofertas
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -14,10 +14,30 @@ def nuevo_usuario(request):
         formulario = UserCreationForm(request.POST)
         if formulario.is_valid:
             formulario.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/ingresar')
     else:
         formulario = UserCreationForm()
     return render(request, 'nuevo_usuario.html', {'formulario':formulario})
+
+def nuevo_usuario_empresa(request):
+    if request.method=='POST':
+        formulario = UserCreationForm(request.POST)
+        if formulario.is_valid:
+            formulario.save()
+            return HttpResponseRedirect('/')
+    else:
+        formulario = UserCreationForm()
+    return render(request, 'reg.html', {'formulario':formulario})
+
+def nuevo_usuario_desocupado(request):
+    if request.method=='POST':
+        formulario = UserCreationForm(request.POST)
+        if formulario.is_valid:
+            formulario.save()
+            return HttpResponseRedirect('/')
+    else:
+        formulario = UserCreationForm()
+    return render(request, 'reg.html', {'formulario':formulario})
 
 def ingresar(request):
     if not request.user.is_anonymous():
