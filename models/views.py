@@ -8,13 +8,14 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
+from django.contrib.auth.models import Group, User
 
 def nuevo_usuario(request):
     if request.method=='POST':
         formulario = UserCreationForm(request.POST)
         if formulario.is_valid:
             formulario.save()
-            return HttpResponseRedirect('/ingresar')
+            return HttpResponseRedirect('/eleccion')
     else:
         formulario = UserCreationForm()
     return render(request, 'nuevo_usuario.html', {'formulario':formulario})
@@ -61,6 +62,16 @@ def ingresar(request):
 
     return render(request, 'ingresar.html', {'formulario':formulario})
 
+def eleccion(request):
+    if request.method=='POST':
+        formulario = UserCreationForm(request.POST)
+        if formulario.is_valid:
+            formulario.save()
+            return HttpResponseRedirect('/inicio')
+    else:
+        formulario = UserCreationForm()
+    return render(request, 'eleccion.html', {'formulario':formulario})
+
 @login_required(login_url='/ingresar')
 def privado(request):
     usuario = request.user
@@ -74,7 +85,7 @@ def cerrar(request):
 @login_required(login_url='/ingresar')
 def inicio(request):
     ofertas = Ofertas.objects.all().order_by('created_date')
-    grupo = Group.objects.get(name="Ofertas").user_set.all()
+    grupo = Group.objects.get(name="Empresa").user_set.all()
     return render(request, 'inicio.html', {'ofertas': ofertas, 'grupo':grupo})
 
 
