@@ -25,20 +25,20 @@ def nuevo_usuario_empresa(request):
         formulario = UserCreationForm(request.POST)
         if formulario.is_valid:
             formulario.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/ingresar')
     else:
         formulario = UserCreationForm()
-    return render(request, 'reg.html', {'formulario':formulario})
+    return render(request, 'reg_empresa.html', {'formulario':formulario})
 
 def nuevo_usuario_desocupado(request):
     if request.method=='POST':
         formulario = UserCreationForm(request.POST)
         if formulario.is_valid:
             formulario.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/ingresar')
     else:
         formulario = UserCreationForm()
-    return render(request, 'reg.html', {'formulario':formulario})
+    return render(request, 'reg_desocupado.html', {'formulario':formulario})
 
 def ingresar(request):
     if not request.user.is_anonymous():
@@ -67,7 +67,7 @@ def eleccion(request):
         formulario = UserCreationForm(request.POST)
         if formulario.is_valid:
             formulario.save()
-            return HttpResponseRedirect('/inicio')
+            return HttpResponseRedirect('/')
     else:
         formulario = UserCreationForm()
     return render(request, 'eleccion.html', {'formulario':formulario})
