@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="page-header">
+        <div class="row">
+            <div class="col-xs-3"><h1><a href="/inicio" style="text-shadow:3px 1px 0 #444">NotiCampus</a></h1></div>
+			<div class="col-xs-7"><img src="/static/img/icono.png" style="width:10%"></div>
+            <div class="col-xs-2"><h1> <a class="w3-btn w3-round-xxlarge w3-" style="text-shadow:3px 1px 0 #444" href="/cerrar">Sign Out</a></h1></div>
+        </div>
+    </div>
+{% block content %}
+<div class="col-xs-10">
+	<div>
+		{% if request.user in grupo %}
+			<h1>Oferta</h1> <a class="w3-button w3-circle w3-black" href="/nueva">+</a>
+		{% else %}
+			<h1>Oferta</h1>
+		{% endif %}
+	</div>
+{% for oferta in oferta%}
+	<div class="w3-container w3-gray" style="padding: 8px 8px;">
+		<h3>{{ oferta.title }}</h3>
+		<p>de <a href="{% url 'oferta_usuario' pk=oferta.author.pk %}">{{oferta.author}}</a> - {{oferta.created_date}}</p>
+		<p>{{ oferta.text|slice:"0:200" }}</p>
+		{% if request.user in grupo and oferta.author == request.user %}
+			<a class="w3-button w3-black w3-round" href="{% url 'oferta_completa' pk=oferta.pk %}">Leer mas</a>
+			<a class="w3-button w3-white w3-round" href="{% url 'oferta_edit' pk=oferta.pk %}">Editar</a>
+			<a class="w3-button w3-white w3-round" href="{% url 'oferta_delete' pk=oferta.pk %}">Eliminar</a>
+		{% else %}
+			<a class="w3-button w3-black w3-round" href="{% url 'oferta_completa' pk=oferta.pk %}">Leer mas</a>
+		{% endif %}
+	</div>
+	<br>
+{% endfor %}
+</div>
+<div class="col-xs-2">
+	<ul class="w3-ul">
+		<li><a href="">Home</a></li>
+		<li><a href="">About</a></li>
+		<li><a href="">Cursos</a></li>
+		<li><a href="">Notificaciones</a></li>
+	</ul>
+</div>
+{% endblock content %}
+ <div class="footer">
+	<p>&#169; Copyright &#169; 2017. Company Aloosa(Ameghino) </p>
+	<div class="connect">
+		<a href="https://www.facebook.com/matii.basualdo" id="Facebook " style="color: #fff">Facebook |</a>
+		<a href="https://twitter.com/matiasbasualdo4" id="Twitter " style="color: #fff"> Twitter |</a>
+		<a href="http://www.youtube.com/" id="YouTube" style="color: #fff">YouTube</a>
+	</div>
+ </div>
+{% endblock body %}

@@ -1,7 +1,8 @@
 from django.shortcuts import render, render_to_response, redirect
+from django.utils import timezone
 from .models import Empresa
 from .models import Desocupado
-from .models import Ofertas
+from .models import Oferta
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
@@ -84,9 +85,51 @@ def cerrar(request):
 
 @login_required(login_url='/ingresar')
 def inicio(request):
-    ofertas = Ofertas.objects.all().order_by('created_date')
+    oferta = Oferta.objects.all().order_by('created_date')
     grupo = Group.objects.get(name="Empresa").user_set.all()
-    return render(request, 'inicio.html', {'ofertas': ofertas, 'grupo':grupo})
+    return render(request, 'inicio.html', {'oferta': oferta, 'grupo':grupo})
 
+def crear_oferta(request):
+    if request.method == "POST":
+        form = OfertaForm(request.POST)
+        if form.is_valid():
+            oferta = form.save(commit=False)
+            oferta.author = request.user
+            oferta.published_date = timezone.now()
+            oferta.save()
+            return HttpResponseRedirect('/inicio')
+    else:
+        form = OfertaForm()
+        return render(request, 'editar_oferta.html', {'form': form})
+
+def editar_oferta(request, pk):
+    oferta = get_object_or_404(Oferta, pk=pk)
+    if request.method == "POST":
+        form = OfertaForm(request.POST, instance=oferta)
+        if form.is_valid():
+            oferta = form.save(commit=False)
+            oferta.author = request.user
+            oferta.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = OfertaForm(instance=oferta)
+    if request.user == oferta.author:
+        return render(request, 'editar_oferta.html', {'form': form})
+    else:
+        return render(request, 'oferta_completa.html', {'oferta': oferta})
+
+def eliminar_oferta(request, pk):
+    oferta = get_object_or_404(Oferta, pk=pk)
+    oferta.delete()
+    return HttpResponseRedirect('/inicio')
+
+def oferta_usuario(request, pk):
+    usr = get_object_or_404(User, pk=pk)
+    oferta = Oferta.objects.filter(author=usr)
+    return render(request, 'oferta_usuario.html', {'oferta': oferta, 'usuario':usr})
+
+def oferta_completa(request, pk):
+    oferta = get_object_or_404(Oferta, pk=pk)
+    return render(request, 'oferta_completa.html', {'oferta': oferta})
 
 
