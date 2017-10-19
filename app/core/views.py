@@ -65,6 +65,20 @@ def handle_registro_empresa_form(request):
     else:
         return render(request, 'signup.html', {'form': form})
 
+@login_required
+def eliminar_usuario(request):
+    if request.method == 'POST':
+        form = EliminarUsuario(request.POST)
+        username = request.POST.get('username')
+        if form.is_valid():
+            rem = User.objects.get(username=username)
+            rem.delete()
+            return redirect('login')
+    else:
+        form = EliminarUsuario()
+    context = {'form': form}
+    return render(request, 'eliminar_usuario.html', context)
+
 # Las de abajo son las vistas que ya tenían, fijense cuales sirven y cuales
 # quedan ya obsoletas con las de arriba.
 """

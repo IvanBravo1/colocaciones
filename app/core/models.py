@@ -61,6 +61,9 @@ class Empresa(models.Model):
     def __str__(self):
         return "Empresa" + str(self.razon_social) + " de " + str(self.user.username)
 
+class EliminarUsuario(models.Model):
+    username = models.CharField(max_length=50)
+
 # Si se crea un usuario, se crea automáticamente una Empresa
 @receiver(post_save, sender=User)
 def update_user_empresa(sender, instance, created, **kwargs):
