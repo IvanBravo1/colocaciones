@@ -65,20 +65,6 @@ def handle_registro_empresa_form(request):
     else:
         return render(request, 'signup.html', {'form': form})
 
-##@login_required
-##def eliminar_usuario(request):
-##    if request.method == 'POST':
-##        form = EliminarUsuario(request.POST)
-##        username = request.POST.get('username')
-##        if form.is_valid():
-##            rem = User.objects.get(username=username)
-##            rem.delete()
-##            return redirect('login')
-##    else:
-##        form = EliminarUsuario()
-##    context = {'form': form}
-##    return render(request, 'eliminar_usuario.html', context)
-
 def oferta_nueva(request):
     if request.method == "POST":
         form = OfertaForm(request.POST)
@@ -87,7 +73,7 @@ def oferta_nueva(request):
             oferta.author = request.user
             oferta.published_date = timezone.now()
             oferta.save()
-            return HttpResponseRedirect('/inicio')
+            return redirect('/home')
     else:
         form = OfertaForm()
         return render(request, 'editar_oferta.html', {'form': form})
@@ -111,8 +97,11 @@ def editar_oferta(request, pk):
 def eliminar_oferta(request, pk):
     oferta = get_object_or_404(Oferta, pk=pk)
     oferta.delete()
-    return HttpResponseRedirect('/inicio')
+    return HttpResponseRedirect('/home')
 
+def eliminar_usuario(request, user_id):
+	User.objects.get(id=user_id).delete()
+	return render(request, 'eliminar_usuario', {'id': user_id})
 
 
 
