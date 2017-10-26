@@ -65,19 +65,56 @@ def handle_registro_empresa_form(request):
     else:
         return render(request, 'signup.html', {'form': form})
 
-@login_required
-def eliminar_usuario(request):
-    if request.method == 'POST':
-        form = EliminarUsuario(request.POST)
-        username = request.POST.get('username')
+##@login_required
+##def eliminar_usuario(request):
+##    if request.method == 'POST':
+##        form = EliminarUsuario(request.POST)
+##        username = request.POST.get('username')
+##        if form.is_valid():
+##            rem = User.objects.get(username=username)
+##            rem.delete()
+##            return redirect('login')
+##    else:
+##        form = EliminarUsuario()
+##    context = {'form': form}
+##    return render(request, 'eliminar_usuario.html', context)
+
+def oferta_nueva(request):
+    if request.method == "POST":
+        form = OfertaForm(request.POST)
         if form.is_valid():
-            rem = User.objects.get(username=username)
-            rem.delete()
-            return redirect('login')
+            oferta = form.save(commit=False)
+            oferta.author = request.user
+            oferta.published_date = timezone.now()
+            oferta.save()
+            return HttpResponseRedirect('/inicio')
     else:
-        form = EliminarUsuario()
-    context = {'form': form}
-    return render(request, 'eliminar_usuario.html', context)
+        form = OfertaForm()
+        return render(request, 'editar_oferta.html', {'form': form})
+
+def editar_oferta(request, pk):
+    oferta = get_object_or_404(Noticia, pk=pk)
+    if request.method == "POST":
+        form = OfertaForm(request.POST, instance=oferta)
+        if form.is_valid():
+            oferta = form.save(commit=False)
+            oferta.author = request.user
+            oferta.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = OfertaForm(instance=oferta)
+    if request.user == oferta.author:
+        return render(request, 'editar_oferta.html', {'form': form})
+    else:
+        return render(request, 'oferta_completa.html', {'oferta': oferta})
+
+def eliminar_oferta(request, pk):
+    oferta = get_object_or_404(Oferta, pk=pk)
+    oferta.delete()
+    return HttpResponseRedirect('/inicio')
+
+
+
 
 # Las de abajo son las vistas que ya tenían, fijense cuales sirven y cuales
 # quedan ya obsoletas con las de arriba.
