@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from app.core.forms import EditarEmpresa, EditarDesocupado
 
 from app.core.forms import RegistroDesocupado, RegistroEmpresa
 
@@ -101,8 +103,32 @@ def eliminar_oferta(request, pk):
 
 def eliminar_usuario(request, user_id):
 	User.objects.get(id=user_id).delete()
-	return render(request, 'eliminar_usuario', {'id': user_id})
+	return render(request, 'eliminar_usuario.html', {'id': user_id})
 
+@login_required
+def editar(request):
+    user = User.objects.get(id=request.user.id)
+    if user.is_desocupado():
+        form = EditarDesocupado
+        data = user.desocupado
+    elif user.is_Empresa():
+        form = EditarEmpresa
+        data = user.empresa
+    if request.method == "GET":
+        return get_editar_form(request, form, data)
+    elif request.method == 'POST':
+        return handle_editar_form(request, form,data)
+
+def get_editar_form(request,formName, data):
+    form = formName(instance=data)
+    return render(request, 'signup.html', {'form':form})
+
+def handle_editar_form(request,formName, data):
+    form = formName(request.POST, instance=data)
+    if form.is_valid():
+        form.save()
+        return redirect('home')
+    return render(request, 'signup.html', {'form':form})
 
 
 # Las de abajo son las vistas que ya tenían, fijense cuales sirven y cuales

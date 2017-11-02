@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from app.core.models import *
 
 class RegistroDesocupado(UserCreationForm):
     dni = forms.CharField(required=True)
@@ -65,3 +66,13 @@ class RegistroEmpresa(UserCreationForm):
         user.save()
         # Y lo devolvemos
         return user
+
+class EditarDesocupado(forms.ModelForm):
+    class Meta:
+        model = Desocupado
+        fields = ['nombre', 'apellido','fecha_nacimiento','localidad', 'experiencia_laboral','formacion', 'habilidades', 'trabajo_realizable', 'dni']
+
+class EditarEmpresa(forms.ModelForm):
+    class Meta:
+        model = Empresa
+        fields = ['cuit', 'rubro', 'razon_social']

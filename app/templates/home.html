@@ -10,4 +10,5 @@
     <p>DNI: {{ user.profile().dni }}</p>
   {% endif %}
   <a class="btn btn-danger" href="{{ url('eliminar.usuario', user.id) }}">Eliminar</a>
+  <a class="btn btn-success" href="{{ url('editar') }}">Editar</a>
 {% endblock %}

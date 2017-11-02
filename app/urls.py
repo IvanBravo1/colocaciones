@@ -23,7 +23,9 @@ urlpatterns = [
     url(r'^$', core_views.home, name='home'),
     url(r'^registrar/desocupado$', core_views.registro_desocupado, name='registrar.desocupado'),
     url(r'^registrar/empresa$', core_views.registro_empresa, name='registrar.empresa'),
-    url(r'^eliminar/usuario(?P<user_id>\d+)/$', core_views.eliminar_usuario, name="eliminar.usuario"),
+    url(r'^eliminar/usuario(?P<user_id>\d+)/$', core_views.eliminar_usuario, name='eliminar.usuario'),
+    url(r'^editarDesocupado', core_views.editar, name='editar'),
+    url(r'^editarEmpresa', core_views.editar, name='editar'),
     # Estas son las URLs que tenian, de las cuales algunas ya estan hechas
     # con las de arriba, y otras hay que ver como formularlas
 
