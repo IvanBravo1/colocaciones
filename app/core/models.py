@@ -76,6 +76,7 @@ class Oferta(models.Model):
     trabajo =  models.CharField(max_length=200)
     horarios =  models.CharField(max_length=200)
     profesion =  models.CharField(max_length=200)
+    empresa = models.ForeignKey('core.Empresa')
     
     def __str__(self):
         return self.nombre

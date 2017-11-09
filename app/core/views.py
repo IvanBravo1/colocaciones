@@ -4,9 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from app.core.forms import EditarEmpresa, EditarDesocupado
 
-from app.core.forms import RegistroDesocupado, RegistroEmpresa
+from app.core.forms import *
 
 @login_required
 def home(request):
@@ -67,15 +66,18 @@ def handle_registro_empresa_form(request):
     else:
         return render(request, 'signup.html', {'form': form})
 
+def ofertas(request):
+    ofertas = Oferta.objects.all().filter(empresa = request.user.empresa)
+    return render(request, 'home.html', {'ofertas': ofertas})
+
 def oferta_nueva(request):
     if request.method == "POST":
         form = OfertaForm(request.POST)
         if form.is_valid():
-            oferta = form.save(commit=False)
-            oferta.author = request.user
-            oferta.published_date = timezone.now()
-            oferta.save()
-            return redirect('/home')
+            job = form.save(commit = False)
+            job.empresa = request.user.empresa
+            job.save()
+            return redirect('home')
     else:
         form = OfertaForm()
         return render(request, 'editar_oferta.html', {'form': form})
@@ -85,7 +87,7 @@ def editar_oferta(request, pk):
     if request.method == "POST":
         form = OfertaForm(request.POST, instance=oferta)
         if form.is_valid():
-            oferta = form.save(commit=False)
+            oferta = form.save
             oferta.author = request.user
             oferta.save()
             return HttpResponseRedirect('/')

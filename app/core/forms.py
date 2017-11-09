@@ -41,6 +41,9 @@ class RegistroDesocupado(UserCreationForm):
         # Y lo devolvemos
         return user
 
+
+
+
 class RegistroEmpresa(UserCreationForm):
     cuit = forms.CharField(max_length=10)
     razon_social = forms.CharField()
@@ -76,3 +79,9 @@ class EditarEmpresa(forms.ModelForm):
     class Meta:
         model = Empresa
         fields = ['cuit', 'rubro', 'razon_social']
+
+class OfertaForm(forms.ModelForm):
+
+    class Meta:
+        model = Oferta
+        fields = ['cargo','trabajo','horarios','profesion']

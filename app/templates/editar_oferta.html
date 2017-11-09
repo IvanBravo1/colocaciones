@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block titulo %}Nueva Oferta{% endblock %}
+{% block encabezado %}
+    <h1>Oferta</h1>
+{% endblock %}
+{% block content %}
+<form method="POST" class="post-form">
+    {{ csrf_input }}
+    {{ form.as_p() }}
+    <button type="submit" class="save btn btn-default">Crear Oferta</button>
+</form>
+{% endblock %}

@@ -5,10 +5,17 @@
   <p>Algunos datos relevantes son:</p>
   {% if user.is_empresa() %}
     <p>CUIT: {{ user.profile().cuit }}</p>
+    <a class="btn btn-success" href="{{ url('oferta_nueva') }}">Crear Oferta</a>
   {% endif %}
   {% if user.is_desocupado() %}
     <p>DNI: {{ user.profile().dni }}</p>
   {% endif %}
   <a class="btn btn-danger" href="{{ url('eliminar.usuario', user.id) }}">Eliminar</a>
   <a class="btn btn-success" href="{{ url('editar') }}">Editar</a>
+  <a class="btn btn-success" href="{{ url('ofertas') }}">Mis Ofertas</a>
+  {% for oferta in ofertas %}
+  <p>
+  {{oferta.cargo}}, {{oferta.trabajo}}, {{oferta.horarios}}, {{oferta.profesion}} <br>
+  </p>
+  {% endfor %}
 {% endblock %}
