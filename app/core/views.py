@@ -113,7 +113,7 @@ def editar(request):
     if user.is_desocupado():
         form = EditarDesocupado
         data = user.desocupado
-    elif user.is_Empresa():
+    elif user.is_empresa():
         form = EditarEmpresa
         data = user.empresa
     if request.method == "GET":
