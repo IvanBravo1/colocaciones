@@ -7,11 +7,15 @@ from django.contrib.auth.models import User
 
 from app.core.forms import *
 
-@login_required
-def home(request):
+def do_render(request, url, dic = {}):
     user = request.user
     user.refresh_from_db()
-    return render(request, 'home.html', {'user': user})
+    dic['user'] = user
+    return render(request, url, dic)
+
+@login_required
+def home(request):
+    return do_render(request, 'home.html')
 
 def registro_desocupado(request):
     # Cuando algo llega a esta vista (llamada desde una URL) puede venir por dos
@@ -66,9 +70,10 @@ def handle_registro_empresa_form(request):
     else:
         return render(request, 'signup.html', {'form': form})
 
+@login_required
 def ofertas(request):
     ofertas = Oferta.objects.all().filter(empresa = request.user.empresa)
-    return render(request, 'home.html', {'ofertas': ofertas})
+    return do_render(request, 'ofertas.html', {'ofertas': ofertas})
 
 def oferta_nueva(request):
     if request.method == "POST":

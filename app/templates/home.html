@@ -1,14 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>Welcome, {{ user.get_full_name() }} <small>{{ user.username }}</small>!</h2>
-  <p>Sos un: {{ user.profile_type() }}</p>
-  <p>Algunos datos relevantes son:</p>
+  <h2>Bienvenido, {{ user.get_full_name() }} {{ user.username }}!</h2>
+  <p>Estas identificado como: {{ user.profile_type() }}</p>
+  <p>Datos relevantes:</p>
   {% if user.is_empresa() %}
+    <p>EMPRESA: {{ user.profile().user }}</p>
     <p>CUIT: {{ user.profile().cuit }}</p>
+    <p>RUBRO: {{ user.profile().rubro }}</p>
     <a class="btn btn-success" href="{{ url('oferta_nueva') }}">Crear Oferta</a>
   {% endif %}
   {% if user.is_desocupado() %}
+    <p>NOMBRE: {{ user.profile().nombre }}</p>
     <p>DNI: {{ user.profile().dni }}</p>
+    <p>LOCALIDAD: {{ user.profile().localidad }}</p>
+    <p>FORMACION: {{ user.profile().formacion }}</p>
   {% endif %}
   <a class="btn btn-danger" href="{{ url('eliminar.usuario', user.id) }}">Eliminar</a>
   <a class="btn btn-success" href="{{ url('editar') }}">Editar</a>
