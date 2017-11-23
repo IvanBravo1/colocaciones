@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if user.is_empresa() %}
+	{% for Oferta in object_list %}
+      <p>Cargo: {{ ofertas.cargo }}</p>
+      <p>Trabajo: {{ ofertas.trabajo }} </p>
+      <p>Horario: {{ ofertas.horario }} </p>
+      <p>Profesion: {{ ofertas.profesion }} </p>
+    {% endfor %}
+{% endif %}
+{% endblock %}
