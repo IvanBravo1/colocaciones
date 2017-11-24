@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^editarEmpresa', core_views.editar, name='editar'),
     url(r'^nuevaOferta', core_views.oferta_nueva, name='oferta_nueva'),
     url(r'^ofertas', core_views.ofertas, name='ofertas'),
-
+    url(r'^eliminar/oferta/(?P<id_oferta>\d+)', core_views.eliminar_oferta, name='eliminar.oferta'),
     # Estas son las URLs que tenian, de las cuales algunas ya estan hechas
     # con las de arriba, y otras hay que ver como formularlas
 

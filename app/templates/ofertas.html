@@ -2,11 +2,12 @@
 {% block content %}
 
 {% if user.is_empresa() %}
-	{% for Oferta in object_list %}
-      <p>Cargo: {{ ofertas.cargo }}</p>
-      <p>Trabajo: {{ ofertas.trabajo }} </p>
-      <p>Horario: {{ ofertas.horario }} </p>
-      <p>Profesion: {{ ofertas.profesion }} </p>
+	{% for oferta in ofertas %}
+      <br><p>Cargo: {{ oferta.cargo }}</p>
+      <p>Trabajo: {{ oferta.trabajo }} </p>
+      <p>Horario: {{ oferta.horarios }} </p>
+      <p>Profesion: {{ oferta.profesion }} </p>
+    <a class="btn btn-danger" href="{{ url('eliminar.oferta',oferta.id)}}"> Eliminar oferta </a></br>
     {% endfor %}
 {% endif %}
 {% endblock %}

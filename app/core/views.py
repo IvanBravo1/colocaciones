@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
@@ -72,8 +72,7 @@ def handle_registro_empresa_form(request):
 
 @login_required
 def ofertas(request):
-    ofertas = Oferta.objects.all().filter(empresa = request.user.empresa)
-    return do_render(request, 'ofertas.html', {'ofertas': ofertas})
+    return do_render(request, 'ofertas.html', {'ofertas':  Oferta.objects.all().filter(empresa = request.user.empresa)})
 
 def oferta_nueva(request):
     if request.method == "POST":
@@ -103,10 +102,10 @@ def editar_oferta(request, pk):
     else:
         return render(request, 'oferta_completa.html', {'oferta': oferta})
 
-def eliminar_oferta(request, pk):
-    oferta = get_object_or_404(Oferta, pk=pk)
+def eliminar_oferta(request, id_oferta):
+    oferta = Oferta.object.get(id=id_oferta)
     oferta.delete()
-    return HttpResponseRedirect('/home')
+    return HttpResponseRedirect('ofertas')
 
 def eliminar_usuario(request, user_id):
 	User.objects.get(id=user_id).delete()
