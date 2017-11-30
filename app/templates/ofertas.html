@@ -7,7 +7,8 @@
       <p>Trabajo: {{ oferta.trabajo }} </p>
       <p>Horario: {{ oferta.horarios }} </p>
       <p>Profesion: {{ oferta.profesion }} </p>
-    <a class="btn btn-danger" href="{{ url('eliminar.oferta',oferta.id)}}"> Eliminar oferta </a></br>
+    <a class="btn btn-danger" href="{{ url('eliminar.oferta',oferta.id)}}"> Eliminar oferta </a>
+    <a class="btn btn-danger" href="{{ url('editar.oferta',oferta.id)}}"> Editar oferta </a></br>
     {% endfor %}
 {% endif %}
 {% endblock %}

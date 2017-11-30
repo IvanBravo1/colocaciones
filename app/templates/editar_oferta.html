@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 {% block titulo %}Nueva Oferta{% endblock %}
-{% block encabezado %}
-    <h1>Oferta</h1>
-{% endblock %}
 {% block content %}
+    <title>{% block title %}Ofertas{% endblock %}</title>
+    <h1> Oferta </h1>
 <form method="POST" class="post-form">
     {{ csrf_input }}
     {{ form.as_p() }}

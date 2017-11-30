@@ -11,19 +11,11 @@
   <body class="{% block body_class %}{% endblock %}">
     
     <div class="main">
-        <header class="header">
-            <h1>Sistema de Colocaciones</h1> 
-            {% if user.is_authenticated() %}
-            <div class="text-right">
-                <a class="btn btn-info" href="{{ url('logout') }}">Cerrar sesion</a>
-            </div>
-            {% else %}
-                <a class="btn btn-warning" href="{{ url('login') }}">Ingresar</a> 
-                <a class="btn btn-info" href="{{ url('registrar.empresa') }}">Registrar Empresa</a>
-                <a class="btn btn-info" href="{{ url('registrar.desocupado') }}">Registrar Usuario</a> 
-            {% endif %}
-            <hr>
-        </header>
+        {% block header %}
+    <div class="text-right">
+        <a class="btn btn-info" href="{{ url('logout') }}">Cerrar sesion</a>
+    </div>
+        {% endblock %}
         {% block content %}
         {% endblock %}
     </div>

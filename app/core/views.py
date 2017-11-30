@@ -86,30 +86,24 @@ def oferta_nueva(request):
         form = OfertaForm()
         return render(request, 'editar_oferta.html', {'form': form})
 
-def editar_oferta(request, pk):
-    oferta = get_object_or_404(Noticia, pk=pk)
-    if request.method == "POST":
-        form = OfertaForm(request.POST, instance=oferta)
-        if form.is_valid():
-            oferta = form.save
-            oferta.author = request.user
-            oferta.save()
-            return HttpResponseRedirect('/')
+@login_required
+def editar_oferta(request):
+    oferta = Oferta.objects.get(id=id_oferta)
+    if user.is_empresa():
+       return render(request, 'editar_oferta.html')
+       form.save()
     else:
-        form = OfertaForm(instance=oferta)
-    if request.user == oferta.author:
-        return render(request, 'editar_oferta.html', {'form': form})
-    else:
-        return render(request, 'oferta_completa.html', {'oferta': oferta})
+        
+       
+
 
 def eliminar_oferta(request, id_oferta):
-    oferta = Oferta.object.get(id=id_oferta)
-    oferta.delete()
-    return HttpResponseRedirect('ofertas')
+    Oferta.objects.get(id=id_oferta).delete()
+    return redirect('ofertas')
 
 def eliminar_usuario(request, user_id):
-	User.objects.get(id=user_id).delete()
-	return render(request, 'eliminar_usuario.html', {'id': user_id})
+    User.objects.get(id=user_id).delete()
+    return render(request, 'eliminar_usuario.html', {'id': user_id})
 
 @login_required
 def editar(request):
